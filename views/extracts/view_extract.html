@@ -1,0 +1,214 @@
+{% extends 'layout.html' %}
+{% load static %}
+
+{% load filters %}
+{% comment %} {% block 'content' %}
+    <br>
+    <br>
+    <div class='container'>
+        <form action="{% url 'view_extract' %}" method="GET">
+            <div class="row">
+                <div class="col-md">
+                    <label>Período</label>
+                    <select name="periodo" class="form-select">
+                        <option value="last_7_days">Últimos 7 dias</option>
+                        <option value="last_month">Mês Anterior</option>
+                        <option value="last_3_months">Últimos 3 Meses</option>
+                        <!-- Adicione mais opções de período conforme necessário -->
+                    </select>
+                </div>
+                <div class="col-md">
+                    <label>Tipo</label>
+                    <select name="tipo" class="form-select">
+                        <option value="">Todos</option>
+                        <option value="D">Entrada</option>
+                        <option value="O">Saída</option>
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <input style="width: 100%" type="submit" class="btn btn-success" value="Filtrar">
+                </div>
+                <div class="col-md-2">
+                    <a href="{% url 'view_extract' %}" class="btn btn-danger">Limpar Filtros</a>
+                </div>
+                
+                <div class="col-md-2">
+                    <a href="{% url 'export_pdf' %}" class="btn btn-info">Exportar extrato</a>
+                </div>
+            </div>
+        </form>
+
+        <hr class="hr" />
+        <br>
+        <br>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th align="center">Remetente/Destinatário</th>
+                    <th align="center" scope="col">Data</th>
+                    <th align="center" scope="col">Descrição</th>
+                    <th align="center" scope="col">Tipo</th>
+                    <th align="center" scope="col">Valor</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for value in values %}
+                <tr class="linha">
+                    <td width="10%">
+                        {% if value.sender == request.user %}
+                            Para: {{ value.recipient.username }}
+                        {% else %}
+                            De: {{ value.sender.username }}
+                        {% endif %}
+                    </td>
+                    <td>{{ value.date|format_datetime }}</td>
+                    <td>{{ value.description }}</td>
+                    <td>
+                        {% if value.sender == request.user %}
+                            <svg color="red" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-down-square-fill" viewBox="0 0 16 16">
+                                <path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zm6.5 4.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 1 1 .708-.708L7.5 10.293V4.5a.5.5 0 0 1 1 0"/>
+                            </svg>
+                        {% else %}
+                            <svg color="green" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-up-square-fill" viewBox="0 0 16 16">
+                                <path d="M2 16a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2zm6.5-4.5V5.707l2.146 2.147a.5.5 0 0 0 .708-.708l-3-3a.5.5 0 0 0-.708 0l-3 3a.5.5 0 1 0 .708.708L7.5 5.707V11.5a.5.5 0 0 0 1 0"/>
+                            </svg>
+                        {% endif %}
+                    </td>
+                    <td>R$ {{ value.value }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <div class="d-flex justify-content-center">
+            <ul class="pagination">
+                {% if values.has_previous %}
+                    <li class="page-item"><a class="page-link" href="?page=1">&laquo;</a></li>
+                    <li class="page-item"><a class="page-link" href="?page={{ values.previous_page_number }}">Anterior</a></li>
+                {% endif %}
+                <li class="page-item disabled"><span class="page-link">Página {{ values.number }} de {{ values.paginator.num_pages }}</span></li>
+                {% if values.has_next %}
+                    <li class="page-item"><a class="page-link" href="?page={{ values.next_page_number }}">Próxima</a></li>
+                    <li class="page-item"><a class="page-link" href="?page={{ values.paginator.num_pages }}">&raquo;</a></li>
+                {% endif %}
+            </ul>
+        </div>
+
+    </div>
+{% endblock 'content' %} {% endcomment %}
+{% block 'content' %}   
+
+<section class="home">
+    <div class="text"><h1>Histórico de Transferências</h1></div>
+    <h3 class="theme-text">Cada transferência feita ou recebida é registrada aqui!!! </h3>
+    <br>
+    <form action="{% url 'view_extract' %}" method="GET">
+    <div class="filter">
+        <label for="periodo">Período:</label>
+        <select name="periodo" id="periodo">
+            <option value="last_7_days">Últimos 7 dias</option>
+            <option value="last_month">Mês Anterior</option>
+            <option value="last_3_months">Últimos 3 Meses</option>
+        </select>
+        
+        <label for="tipo">Tipo:</label>
+        <select name="tipo" id="tipo">
+            <option value="">Todos</option>
+            <option value="D">Entrada</option>
+            <option value="O">Saída</option>
+        </select>
+        
+        <button id="filter" type="submit">Filtrar</button>
+        <a href="{% url 'view_extract' %}" class="btn-reset">Limpar Filtros</a>
+        
+        <a href="{% url "export_pdf" %}">Exportar Extrato</a>
+    </div>
+    </form>
+    <table class="no-border">
+        <thead>
+            <tr>
+                <th>Remetente/Destinatário</th>
+                <th>Data</th>
+                <th>Descrição</th>
+                <th>Tipo</th>
+                <th>Valor</th>
+            </tr>
+        </thead>
+        {% comment %} <tbody>
+            {% for value in values %}
+            <tr>
+                <td>
+                    {% if value.sender == request.user %}
+                        Para: {{ value.recipient.username }}
+                    {% else %}
+                        De: {{ value.sender.username }}
+                    {% endif %}
+                </td>
+                <td>{{ value.date|format_datetime }}</td>
+                <td>{{ value.description }}</td>
+                <td>
+                    {% if value.sender == request.user %}
+                        <svg color="red" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-down-square-fill" viewBox="0 0 16 16">
+                            <path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zm6.5 4.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 1 1 .708-.708L7.5 10.293V4.5a.5.5 0 0 1 1 0"/>
+                        </svg>
+                    {% else %}
+                        <svg color="green" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-up-square-fill" viewBox="0 0 16 16">
+                            <path d="M2 16a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2zm6.5-4.5V5.707l2.146 2.147a.5.5 0 0 0 .708-.708l-3-3a.5.5 0 0 0-.708 0l-3 3a.5.5 0 1 0 .708.708L7.5 5.707V11.5a.5.5 0 0 0 1 0"/>
+                        </svg>
+                    {% endif %}
+                </td>
+                <td>{% if value.sender == request.user %}
+                    R$ {{ value.value }}
+                {% else %}
+                    R$ {{ value.value }}
+                {% endif %}</td>
+            </tr>
+            {% endfor %}
+        </tbody> {% endcomment %}<tbody>
+        {% for value in values %}
+        {% if value.sender == user and value.type == 'O' %}
+        <tr>
+            <td>
+                Para: {{ value.recipient.name }}
+            </td>
+            <td>{{ value.date|format_datetime }}</td>
+            <td>{{ value.description }}</td>
+            <td><svg color="red" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-down-square-fill" viewBox="0 0 16 16">
+                <path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zm6.5 4.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 1 1 .708-.708L7.5 10.293V4.5a.5.5 0 0 1 1 0"/>
+            </svg></td>
+            <td>R$ {{ value.value }}</td>
+        </tr>
+        {% endif %}
+        {% if value.recipient == user and value.type == 'D' %}
+        <tr>
+            <td>
+                De: {{ value.sender.name }}
+            </td>
+            <td>{{ value.date|format_datetime }}</td>
+            <td>{{ value.description }}</td>
+            <td> <svg color="green" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-up-square-fill" viewBox="0 0 16 16">
+                <path d="M2 16a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2zm6.5-4.5V5.707l2.146 2.147a.5.5 0 0 0 .708-.708l-3-3a.5.5 0 0 0-.708 0l-3 3a.5.5 0 1 0 .708.708L7.5 5.707V11.5a.5.5 0 0 0 1 0"/>
+            </svg></td>
+            <td>R$ {{ value.value }}</td>
+        </tr>
+        {% endif %}
+        {% endfor %}
+    </tbody>
+    </table>
+    <div class="pagination">
+        <span class="step-links">
+            {% if values.has_previous %}
+                <a href="?page={{ values.previous_page_number }}{% if request.GET.account %}&account={{ request.GET.account }}{% endif %}{% if request.GET.periodo %}&periodo={{ request.GET.periodo }}{% endif %}{% if request.GET.tipo %}&tipo={{ request.GET.tipo }}{% endif %}">Anterior</a>
+            {% endif %}
+            <span class="current">
+                Página {{ values.number }} de {{ values.paginator.num_pages }}.
+            </span>
+            {% if values.has_next %}
+                <a href="?page={{ values.next_page_number }}{% if request.GET.account %}&account={{ request.GET.account }}{% endif %}{% if request.GET.periodo %}&periodo={{ request.GET.periodo }}{% endif %}{% if request.GET.tipo %}&tipo={{ request.GET.tipo }}{% endif %}">Próxima</a>
+            {% endif %}
+        </span>
+    </div>
+
+</section>
+
+{% endblock 'content' %}

@@ -1,0 +1,52 @@
+/* large-cards.css */
+
+.large-cards {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.large-card {
+    width: calc(50% - 10px); /* Isso garante que haja espaço igual entre as duas large cards */
+    background-color: #FFF;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: var(--tran-05);
+}
+
+.large-card h3 {
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--text-color);
+    margin-bottom: 10px;
+}
+
+.large-card p {
+    font-size: 16px;
+    color: var(--text-color);
+}
+
+/* Estilo para modo escuro */
+body.dark .large-card {
+    background-color: var(--primary-color-light);
+}
+
+body.dark .large-card h3,
+body.dark .large-card p {
+    color: var(--text-color);
+}
+
+.btn {
+    display: inline-block;
+    padding: 10px 20px;
+    border-radius: 5px;
+    background-color: var(--primary-color);
+    color: #fff;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+  
+.btn:hover {
+    background-color: #05c305; /* Altere para a cor desejada no hover */
+}

@@ -1,0 +1,143 @@
+
+<!--Parte do arquivo "extratos.html"(a tabela), que queremos exportar como PDF-->
+
+{% comment %} <div class="card">
+    
+    <table>
+        <tr>
+            <th>Conta</th>
+            <th>Data</th>
+            <th>Tipo</th>
+            <th>valor</th>
+            
+        </tr>
+        {% for value in values %}
+            <tr class="linha">
+                <td width="10%">{{value.account.name}}</td>
+                <td>{{value.date}}</td>
+                <td>
+                {% if value.type == 'O'%}
+                    Saída
+                {% else %}
+                    Entrada
+                {% endif %}
+                
+                </td>
+                <td>R$ {{value.value}}</td>
+                
+            </tr>
+        {% endfor %}
+
+    </table>
+    
+
+</div> {% endcomment %}
+<!DOCTYPE html>
+{% load static %}
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PDF-Extrato</title>
+    <link rel="stylesheet" href="{% static 'css/extract/partials.css' %}">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .header h1 {
+            margin: 0;
+            padding: 10px 0;
+        }
+        .header p {
+            margin: 5px 0;
+            font-size: 14px;
+        }
+        .content {
+            margin: 0 auto;
+            width: 100%;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        thead th {
+            background-color: #f2f2f2;
+            padding: 10px;
+            text-align: left;
+        }
+        tbody td {
+            padding: 10px;
+            text-align: left;
+        }
+        tbody tr:hover {
+            background-color: #f1f1f1;
+        }
+    </style>
+    
+</head>
+<div class="card">
+    <div class="header">
+        <h2>Extrato Bancário</h2>
+        <h4>Emissor: {{user.name}}</h4>
+        <p>Data de Emissão: {{ current_time}}</p>
+    </div>
+    <table>
+        <thead>
+            <tr>
+                <th>Conta</th>
+                <th>Data</th>
+                <th>Descrição</th>
+                <th>Tipo</th>
+                <th>Valor</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for value in values %}
+                {% comment %} <tr class="linha">
+                    <td width="10%">{{ value.account.name }}</td>
+                    <td>{{ value.date }}</td>
+                    <td>
+                        {% if value.type == 'O' %}
+                            Saída
+                        {% else %}
+                            Entrada
+                        {% endif %}
+                    </td>
+                    <td>R$ {{ value.value }}</td>
+                </tr> {% endcomment %}
+                {% if value.sender == user and value.type == 'O' %}
+                <tr>
+                    <td>
+                        Para: {{ value.recipient.name }}
+                    </td>
+                    <td>{{ value.date }}</td>
+                    <td>{{ value.description }}</td>
+                    <td>Saída</td>
+                    <td>R$ {{ value.value }}</td>
+                </tr>
+                {% endif %}
+                {% if value.recipient == user and value.type == 'D' %}
+                <tr>
+                    <td>
+                        De: {{ value.sender.name }}
+                    </td>
+                    <td>{{ value.date}}</td>
+                    <td>{{ value.description }}</td>
+                    <td> Entrada</td>
+                    <td>R$ {{ value.value }}</td>
+                </tr>
+                {% endif %}
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+</html>

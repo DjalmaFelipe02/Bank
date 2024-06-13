@@ -1,0 +1,61 @@
+{% extends "layout.html" %}
+{% load static %}
+
+{% block 'content' %}
+
+
+<section class="home">
+  <div class="text"><h1>Home</h1></div>
+  <div class="messages">
+    {% for message in messages %}
+        <div class="message {{ message.tags }}">
+            <span class="close-btn" onclick="this.parentElement.style.display='none';">&times;</span>
+            {{ message }}
+        </div>
+    {% endfor %}
+</div>
+   <h2 class="theme-text">Seja bem-vindo ao Banco TreeBank</h2>
+    <div class="cards">
+       <div class="card">
+           <h3>Saldo Atual </h3>
+           <p>R$ <strong>{% if user_balance < 0 %}0{% else %}{{user_balance}}{% endif %}</strong></p>
+       </div>
+    </div>
+    <div class="large-cards">
+      <div class="large-card">
+        <h3>Tranferência</h3>
+        <p>Aqui faça suas tranferências para as pessoas que você quiser.</p>
+        <br>
+        <a href="{% url 'new_value' %}" class="btn"><i class='bx bx-transfer icon' ></i>          <strong>Transferir</strong></a>
+          
+      </div>
+      
+      <div class="large-card">
+        <h3>Vizualizar histórico de Transferências </h3>
+        <p>Aqui você poderá vizualizar todas as transferências feitas e recebidas.</p>
+        <br>
+        <a href="{% url 'view_extract' %}" class="btn"><i class='bx bx-history icon'></i>         <strong>Vizualizar</strong></a>
+      </div>
+    </div>
+
+    <div class="cards">
+      <div class="card">
+          <h3>Transferências Totais</h3>
+          <p >Entrada: R$ {{ total_entradas_recebidas }}</p>
+          <p >Saída: R$ {{ total_saidas_recebidas }}</p>
+          
+      </div>
+      <div class="card">
+          <h3>Resumo do Mês Atual</h3>
+          <p>Total de Entradas: R$ {{ entradas_mes }}</p>
+          <p>Total de Saída R$ {{ saidas_mes }}</p>
+      </div>
+      
+    </div>
+</section>
+
+{% endblock 'content' %}
+
+
+
+

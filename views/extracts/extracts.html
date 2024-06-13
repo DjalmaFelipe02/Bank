@@ -1,0 +1,33 @@
+{% load static %}
+
+<div class="card">
+    
+    <table>
+        <tr>
+            <th>Conta</th>
+            <th>Data</th>
+            <th>Tipo</th>
+            <th>valor</th>
+            
+        </tr>
+        {% for value in values %}
+            <tr class="linha">
+                <td width="10%">{{value.account}}</td>
+                <td>{{value.date}}</td>
+                <td>
+                {% if value.type == 'S'%}
+                    <img src="{% static 'perfil/img/saidas.png' %}">
+                {% else %}
+                    <img src="{% static 'perfil/img/entradas.png' %}">
+                {% endif %}
+                
+                </td>
+                <td>R$ {{valor.valor}}</td>
+                
+            </tr>
+        {% endfor %}
+
+    </table>
+    
+
+</div>

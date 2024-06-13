@@ -1,0 +1,197 @@
+{% extends "base.html" %}
+{% load static  %}
+
+{% block 'title' %}
+    Django Framework
+
+{% endblock 'title' %}
+
+{% block 'head' %}
+    
+    {# "CSS" #}
+    <link rel="stylesheet" href="{% static "css/base.css" %}">
+    
+
+{% endblock 'head' %}
+{% block 'sidebar' %}
+
+<nav class="sidebar close">
+    <header>
+        <div class="image-text">
+            <span class="image">
+                <img src={% static "images/TreeBankLogo.png" %} alt="">
+            </span>
+            <div class="text logo-text">
+                <span class="name" color="Green">TreeBank</span>
+                <span class="profession">Olá, {{user.name}}</span>
+            </div>
+        </div>
+
+        <i class='bx bx-chevron-right toggle'></i>
+    </header>
+
+    <div class="menu-bar">
+        <div class="menu">
+
+            <ul class="menu-links">
+                <li class="nav-link">
+                    <a href="{% url "home" %}">
+                        <i class='bx bx-home-alt icon' ></i>
+                        <span class="text nav-text">Dashboard</span>
+                    </a>
+                </li>
+
+                <li class="nav-link">
+                    <a href="{% url "view_extract" %}">
+                        <i class='bx bx-history icon' ></i>
+                        <span class="text nav-text">Histórico</span>
+                    </a>
+                </li>
+
+                <li class="nav-link">
+                    <a href="#">
+                        <i class='bx bx-pie-chart-alt icon' ></i>
+                        <span class="text nav-text">Analytics</span>
+                    </a>
+                </li>
+
+                <li class="nav-link">
+                    <a href="#">
+                        <i class='bx bx-wallet icon' ></i>
+                        <span class="text nav-text">Wallets</span>
+                    </a>
+                </li>
+
+            </ul>
+        </div>
+
+       <div class="bottom-content">
+            
+
+         {% if user.is_authenticated %}
+         <li class="">
+           
+           <form action="{% url 'logout' %}" method="post">
+             {% csrf_token %} 
+             <button class="logout-button" type="submit">
+                 <i class='bx bx-log-out icon' ></i>
+                 <span class="text nav-text">Logout</span>
+             </button>
+           </form>
+           
+         </li>
+         {% else %}
+         <li class="nav-link">
+           <a href="{% url "login" %}">
+               <i class='bx bx-log-in icon' ></i>
+               <span class="text nav-text">Login</span>
+           </a>
+         </li>
+         <li class="nav-link">
+         <a href="{% url "signup" %}">
+             <i class='bx bx-user icon' ></i>
+             <span class="text nav-text">Cadastar-se</span>
+         </a>
+         </li>
+         {% endif %}
+         <li class="mode">
+               <div class="sun-moon">
+                   <i class='bx bx-moon icon moon'></i>
+                   <i class='bx bx-sun icon sun'></i>
+               </div>
+               <span class="mode-text text"></span>
+
+               <div class="toggle-switch">
+                   <span class="switch"></span>
+               </div>
+         </li>
+            
+       </div>
+    </div>
+
+</nav>
+
+{% endblock 'sidebar' %}
+
+
+
+
+
+
+{% comment %} {% block 'header' %}
+
+    <div class="container">
+        <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
+            <a href="{% url 'index' %}" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
+                <span class="fs-4">TreeBank</span>
+            </a>
+            <ul class="nav nav-pills">
+                {% if user.is_authenticated %}
+                
+                    <li class="nav-item">
+                        <form action="{% url 'logout' %}" method="post">
+                            {% csrf_token %} 
+                            <button class="nav-link px-2 link-dark" type="submit">Logout</button>
+                        </form>
+
+                    </li>
+
+                {% else %}
+
+                    <li class="nav-item">
+                        <a href="{% url "signup" %}" class="nav-link px-2 link-dark">Cadastrar</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a href="{% url "login" %}" class="nav-link px-2 link-dark">Acessar</a>
+                    </li>
+
+                {% endif %}
+                <li class="nav-item">
+                    <a href="{% url "home" %}" class="nav-link px-2 link-dark">Sobre</a>
+                </li>
+            </ul>
+        </header>
+    </div>
+
+{% endblock 'header' %} {% endcomment %}
+
+
+{% block 'main' %}
+        
+    {% block 'content' %}
+        
+    {% endblock 'content' %}
+        
+{% endblock 'main' %}
+
+
+{% block 'scripts' %}
+
+    {% comment %} <script>
+      document.addEventListener('DOMContentLoaded', function() {
+          const modeSwitch = document.querySelector('.toggle-switch');
+          const currentMode = localStorage.getItem('mode') || 'light';
+
+          if (currentMode === 'dark') {
+              document.body.classList.add('dark');
+              document.body.classList.remove('light');
+          } else {
+              document.body.classList.add('light');
+              document.body.classList.remove('dark');
+          }
+
+          modeSwitch.addEventListener('click', function() {
+              document.body.classList.toggle('dark');
+              document.body.classList.toggle('light');
+              const newMode = document.body.classList.contains('dark') ? 'dark' : 'light';
+              localStorage.setItem('mode', newMode);
+          });
+      });
+    </script> {% endcomment %}
+    
+{# JS do Projeto #}
+    <script src="{% static "js/base.js" %}"></script>
+    
+    <script src="{% static "js/messages.js" %}"></script>
+{% endblock 'scripts' %}

@@ -1,0 +1,137 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+body {
+    font-family: 'Inter', sans-serif;
+    margin: 0;
+    padding: 0;
+    color: #1e1e1e
+}
+
+img {
+    width: 40%; /* Ajuste conforme necessário */
+    float: left;
+    height: 730px;
+}
+
+.fraseLogin{
+    position: absolute;
+    font-family: Arial, Helvetica, sans-serif;
+    left: 45px;
+    bottom: 59px;
+}
+
+.page {
+    display: flex;
+    align-items: center;
+    align-content: center;
+    width: 100%;
+    height: 100vh;
+    background-color: rgb(52, 52, 52);
+}
+
+.rodape {
+    position: fixed; /* ou 'absolute' se você não quiser que ele fique sempre visível */
+    bottom: 0;
+    right: 0;
+    width: 60%; /* faz o rodapé se estender por toda a largura da página */
+    backdrop-filter: blur(16px) saturate(180%);
+    -webkit-backdrop-filter: blur(16px) saturate(180%);
+    background-color: rgba(0, 0, 0, 0.75);
+    border: 1px solid rgba(255, 255, 255, 0.125);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 30px 40px; /* ajuste conforme necessário */
+    margin: 0; /* remove margens padrão */
+  }
+  
+  
+
+.rodape a {
+    color: #02b177;
+    text-decoration: none;
+    margin: 0 100px; /* Ajuste o espaçamento conforme necessário */
+}
+
+.formLogin {
+    position: absolute;
+    right: 235px;
+    display: flex;
+    flex-direction: column;
+    background-color: #fff;
+    border-radius: 7px;
+    padding: 45px;
+    box-shadow: 10px 10px 40px rgba(0, 0, 0, 0.4);
+    gap: 5px
+}
+
+.areaLogin img {
+    width: 420px;
+}
+
+.formLogin h1 {
+    padding: 0;
+    margin: 0;
+
+    font-weight: 500;
+    font-size: 2.3em;
+}
+
+.formLogin p {
+    display: inline-block;
+    font-size: 21px;
+    color: #1e1e1e;
+    font-weight: 600;
+    margin-bottom: 25px;
+}
+
+.formLogin input {
+    padding: 15px;
+    font-size: 14px;
+    border: 1.5px solid #e1e1e1;
+    margin-bottom: 20px;
+    margin-top: 5px;
+    border-radius: 4px;
+    transition: all linear 160ms;
+    outline: none;
+}
+
+
+.formLogin input:focus {
+    border: 1px solid #02b177;
+}
+
+.formLogin label {
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.formLogin a {
+    display: inline-block;
+    margin-bottom: 20px;
+    font-size: 13px;
+    color: #555;
+    transition: all linear 160ms;
+}
+
+.formLogin a:hover {
+    color: #02b177;
+}
+
+.btn {
+    background-color: #02b177;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 600;
+    border: none !important;
+    transition: all linear 160ms;
+    cursor: pointer;
+    margin: 0 !important;
+
+}
+
+.btn:hover {
+    transform: scale(1.05);
+    background-color: #02b177;
+
+}

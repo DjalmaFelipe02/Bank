@@ -1,0 +1,21 @@
+{% extends "layout.html" %}
+{% load static %}
+
+
+{% block 'title' %}
+    TreeBank
+{% endblock 'title' %}
+
+{% block 'content' %}
+    <section class="home">
+        <div class="text"><h1>Home</h1></div>
+        {% for message in messages %}
+        <div class="message {{ message.tags }}">
+            <span class="close-btn" onclick="this.parentElement.style.display='none';">&times;</span>
+            {{ message }}
+        </div>
+        {% endfor %}
+        </div>
+        <h2 class="theme-text">Faça Login para acessar os conteúdos principais da TreeBank </h2>
+    </section>
+{% endblock 'content' %}

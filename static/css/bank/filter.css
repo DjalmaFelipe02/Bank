@@ -1,0 +1,101 @@
+.filter {
+    margin-top: 20px;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+}
+
+.filter label {
+    font-weight: bold;
+}
+
+.filter select {
+    margin-right: 10px;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+}
+
+.filter button {
+    padding: 5px 10px;
+    border: none;
+    border-radius: 3px;
+    background-color: var(--primary-color);
+    color: #fff;
+    cursor: pointer;
+}
+
+.filter button:hover {
+    background-color: var(--primary-color);
+}
+
+.filter a {
+    margin-left: 10px;
+    padding: 5px 10px;
+    border-radius: 3px;
+    background-color: var(--primary-color);
+    color: #fff;
+    text-decoration: none;
+}
+
+.filter a:hover {
+    background-color: var(--primary-color);
+    color: #fff;
+}
+
+/* Estilos para o tema light */
+.light-theme {
+    background-color: #f9f9f9;
+    color: #333;
+}
+
+.light-theme select,
+.light-theme button {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    color: #333;
+}
+
+.light-theme button:hover {
+    background-color: #007bff;
+    color: #fff;
+}
+
+/* Estilos para o tema dark */
+
+
+body.dark select,
+body.dark button{
+    background-color: var(--primary-color-light); /* Altere para a cor desejada */
+    border: var(--text-color); /* Altere para a cor desejada */
+    color: var(--text-color); /* Altere para a cor desejada */
+}
+body.dark label {
+    background-color: var(--sidebar-color);
+    color: var(--text-color);
+}
+
+body.dark button:hover {
+    background-color:  #05c305; /* Altere para a cor desejada */
+    color: var(--text-color); /* Altere para a cor desejada */
+}
+
+body.dark a:hover {
+    background-color:  #05c305; /* Altere para a cor desejada */
+    color: var(--text-color); /* Altere para a cor desejada */
+}
+
+body.dark .filter {
+    background-color: var(--sidebar-color); /* Altere para a cor desejada */
+    padding: 10px; /* Adicione padding para espaçamento interno */
+    border-radius: 5px; /* Adicione borda arredondada */
+}
+/* Estilo para modo escuro */
+body.dark .large-card {
+    background-color: var(--primary-color-light);
+}
+
+body.dark .large-card h3,
+body.dark .large-card p {
+    color: var(--text-color);
+}

@@ -1,0 +1,49 @@
+table {
+    width: 100%;
+    border-collapse: collapse; /* Remove default border collapse */
+    margin-top: 20px;
+}
+
+table, th, td {
+    border: 1px solid black; /* Add borders to table, header and cells */
+}
+
+/* Table header styling */
+thead th {
+    background-color: #f2f2f2; /* Light grey background for headers */
+    padding: 10px; /* Add padding to headers */
+    text-align: left;
+}
+
+/* Table body styling */
+tbody td {
+    padding: 10px; /* Add padding to cells */
+    text-align: left; /* Align text to the left */
+}
+
+/* Table row hover effect */
+tbody tr:hover {
+    background-color: #f1f1f1; /* Light grey background on hover */
+}
+
+/* Header section styling */
+.header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.header h1 {
+    margin: 0;
+    padding: 10px 0;
+}
+
+.header p {
+    margin: 5px 0;
+    font-size: 14px;
+}
+
+/* Content section styling */
+.content {
+    margin: 0 auto;
+    width: 90%;
+}

@@ -1,0 +1,113 @@
+{% comment %} {% load static %}
+
+<!doctype html>
+<html lang="pt-br">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block 'title' %}{% endblock 'title'%}</title>
+
+    {% block 'head' %}{% endblock 'head'%}
+    <link rel="short cut icon" type="image/x-icon" href="{% static "images/favicon.ico" %}">
+    <link rel="stylesheet" href="{% static "css/bank/login.css" %}">   
+  
+  </head>
+  <body>
+
+    {% comment %} {% if user.is_authenticated %}
+			<h2>Olá, {{user.username}}, voce foi logado com sucesso.</h2>  
+		{% endif %}  {% endcomment %}
+		 
+    {% comment %} {% block 'main' %}
+      {% block 'content' %}
+          
+      {% endblock 'content' %}
+    {% endblock 'main' %}
+
+
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
+
+
+    {% block 'scripts' %}{% endblock 'scripts' %}
+  </body>
+ 
+</html> {% endcomment %} 
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  {% block 'head' %}{% endblock 'head' %}
+  <title>{% block 'title' %}{% endblock 'title' %}</title>
+  
+  <!----======== CSS ======== -->
+  <link rel="stylesheet" href="{% static "css/bank/home.css" %}">
+  <link rel="stylesheet" href="{% static "css/bank/large-card.css" %}">
+  <link rel="stylesheet" href="{% static 'css/messages.css' %}">
+  <link rel="stylesheet" href="{% static "css/bank/filter.css" %}">
+  <link rel="stylesheet" href="{% static "css/bank/new_value.css" %}">
+  <link rel="stylesheet" href="{% static "css/bank/table.css" %}">
+  
+  
+  <!----===== Boxicons CSS ===== -->
+  <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
+  
+  <!--<title>Dashboard Sidebar Menu</title>--> 
+</head>
+  <body>
+  {% block 'sidebar' %}
+  
+  {% endblock 'sidebar' %}
+
+
+{% block 'main' %}
+  {% block 'content' %}
+      
+  {% endblock 'content' %}
+{% endblock 'main' %}
+       
+
+{% block 'scripts' %}{% endblock 'scripts' %}
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+      const modeSwitch = document.querySelector('.toggle-switch');
+      const modeText = document.querySelector('.mode-text');
+      const currentMode = localStorage.getItem('mode');
+
+      // Função para atualizar o texto do modo
+      const updateModeText = () => {
+          if (document.body.classList.contains('dark')) {
+              modeText.innerText = "Light mode";
+          } else {
+              modeText.innerText = "Dark mode";
+          }
+      };
+
+      // Definindo o modo inicial com base no localStorage
+      if (currentMode === 'dark') {
+          document.body.classList.add('dark');
+      }
+
+      // Atualiza o texto do modo na inicialização
+      updateModeText();
+
+      // Evento de clique para alternar entre dark e light
+      modeSwitch.addEventListener('click', function() {
+          if (document.body.classList.contains('dark')) {
+              document.body.classList.remove('dark');
+          } else {
+              document.body.classList.add('dark');
+          }
+          const newMode = document.body.classList.contains('dark') ? 'dark' : '';
+          localStorage.setItem('mode', newMode);
+          updateModeText();
+      });
+  });
+</script>
+  </body>
+</html>
+
