@@ -14,7 +14,7 @@ def index(request):
         # Caso contrário, continue renderizando a página index
         aviso = "Aviso importante: Esta página não exige Login"
         messages.warning(request, aviso)
-        return render(request, "index.html", {'titulo': 'Bem-Vindo ao TreeBank'})
+        return render(request, "index.html")
 
 
 @login_required

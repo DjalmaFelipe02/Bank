@@ -20,7 +20,6 @@ class AccountCreateView(CreateView):
     def form_valid(self, form) -> HttpResponse:
         form.instance.password = make_password(form.instance.password)   #Encrypt the password before going to the DataBase
         form.save()
-        messages.success(self.request, self.success_message)
           
         return super(AccountCreateView, self).form_valid(form)
     

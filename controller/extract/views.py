@@ -1,18 +1,20 @@
 import os
-from io import BytesIO # Biblioteca que permite salvar os Bytes em memória, em vez de salvar no disco.
-from .models import Values
-from weasyprint import HTML
+from io import BytesIO  #Biblioteca que permite salvar os Bytes em memória, em vez de salvar no disco.
 from datetime import datetime
+
+from weasyprint import HTML
 from django.utils import timezone
 from django.conf import settings 
-from django.shortcuts import render
-from django.contrib import messages
-from django.http import FileResponse
-from account.models import CustomUser
 from django.shortcuts import render, redirect
+from django.contrib import messages
+from django.http import FileResponse ,HttpResponse
 from django.template.loader import render_to_string
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+
+from .models import Values
+from account.models import CustomUser
+
 
 @login_required
 def new_value(request):
@@ -20,18 +22,23 @@ def new_value(request):
         accounts = CustomUser.objects.exclude(id=request.user.id)
         return render(request, 'extracts/new_value.html', {'accounts': accounts})
     elif request.method == "POST":
-        value = request.POST.get('value')
+        value_str = request.POST.get('value')
         description = request.POST.get('description')
         # account_id = request.POST.get('account')
         recipient_email = request.POST.get('recipient_email')
-
+        
        # Verifica se o valor é um número válido
-        if not value.replace('.', '', 1).isdigit():
-            messages.error(request, "O Campo Valor deve ser um número.")
+        try:
+            value = float(value_str.replace(',', '.'))
+        except ValueError:
+            messages.error(request, "O campo Valor deve ser um número válido.")
+            return redirect('new_value')
+        
+        if value <= 0:
+            messages.error(request, "O campo Valor deve ser um número positivo.")
             return redirect('new_value')
 
         value = round(float(value), 2)
-
 
         # Verifica se o saldo é suficiente para a transferência
         if request.user.value < value:
@@ -48,15 +55,6 @@ def new_value(request):
             messages.error(request, "Conta destinatária não encontrada.")
             return redirect('new_value')
 
-        # # Criar uma nova instância de Values para registrar a transferência
-        # transfer = Values.objects.create(
-        #     value=value,
-        #     description=description,
-        #     account=request.user,  # A conta do remetente é a conta do usuário atual
-        #     sender=request.user,
-        #     recipient=recipient_account,
-        #     type='O',  # Saída (Out)
-        # )
          # Cria uma nova instância de Values para registrar a saída (transação do remetente)
         transfer_out =Values.objects.create(
             value=-value,  # Valor negativo para saída
@@ -142,7 +140,7 @@ def view_extract(request):
         values = paginator.page(1)
     except EmptyPage:
         values = paginator.page(paginator.num_pages)
-    
+
     return render(request, 'extracts/view_extract.html', {'values': values, 'accounts': accounts})
 
 
@@ -152,7 +150,6 @@ def export_pdf(request):
     values= Values.objects.filter(account=user,date__month=datetime.now().month).order_by('-date')
     accounts = CustomUser.objects.filter(id=user.id)
 
-    # Captura a data e hora atual
     now = datetime.now()
     current_time = now.strftime("%d/%m/%Y %H:%M:%S")
     
@@ -165,7 +162,8 @@ def export_pdf(request):
 
     HTML(string=template_render).write_pdf(path_output) # Instaciando o HTML no weasyprint, para gerar o seu PDF e ser salvo no "path_output".
 
-    path_output.seek(0) #Voltando o ponteiro para o começo do arquivo, pois se estiver no final ele vai considerar o arquivo vazio, já que ele lê tudo oque estiver na frente do ponteiro.
-    #(Ex: É como digitar em um rascunho vazio e sempre o ponteiro de digitar irá ficar no final do texto, com esse código, faz o ponteiro retornar para o inicio provando assim a existencia de algo non arquivo).
-    
-    return FileResponse(path_output, filename="extrato.pdf") # Retorna para o usuário o arquivo PDF
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = 'attachment; filename="extrato.pdf"'
+    response.write(path_output.getvalue())
+
+    return response

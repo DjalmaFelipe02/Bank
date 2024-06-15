@@ -1,6 +1,35 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
-from django.contrib.auth.models import UserManager
+from django.contrib.auth.models import UserManager, BaseUserManager
+
+class CustomUserManager(BaseUserManager):
+    def create_user(self, cpf, email, password=None, **extra_fields):
+        """
+        Create and return a regular user with the given cpf, email, and password.
+        """
+        if not cpf:
+            raise ValueError(_('The CPF must be set'))
+        if not email:
+            raise ValueError(_('The Email must be set'))
+        email = self.normalize_email(email)
+        user = self.model(cpf=cpf, email=email, **extra_fields)
+        user.set_password(password)
+        user.save(using=self._db)
+        return user
+
+    def create_superuser(self, cpf, email, password=None, **extra_fields):
+        """
+        Create and return a superuser with the given cpf, email, and password.
+        """
+        extra_fields.setdefault('is_staff', True)
+        extra_fields.setdefault('is_superuser', True)
+
+        if extra_fields.get('is_staff') is not True:
+            raise ValueError(_('Superuser must have is_staff=True.'))
+        if extra_fields.get('is_superuser') is not True:
+            raise ValueError(_('Superuser must have is_superuser=True.'))
+
+        return self.create_user(cpf, email, password, **extra_fields)
 
 class CustomUser(AbstractUser):
 
@@ -13,9 +42,9 @@ class CustomUser(AbstractUser):
     value = models.FloatField(default=15.00) #Inicial value Account
 
     USERNAME_FIELD = "cpf"          #The form field will have the input id declared as "username_id", even though it is a CPF field
-    REQUIRED_FIELDS = ["name"]
+    REQUIRED_FIELDS = ["name","email"]
 
-    objects = UserManager()
+    objects = CustomUserManager()
 
     def __str__(self):
         return self.username

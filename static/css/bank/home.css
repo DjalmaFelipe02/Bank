@@ -45,16 +45,6 @@ body.dark {
     --hover-color-dark: #05c305;
 }
 
-/* Texto padrão */
-/* .mode-text::after {
-    content: "Dark mode"; 
-} */
-
-/* Altera o texto do modo para "Light mode" quando o body não tem a classe dark */
-/* body:not(.dark) .mode-text::after {
-    content: "Light mode";
-}  */
-
 
 /* ===== Sidebar ===== */
 .sidebar {
@@ -111,6 +101,7 @@ body.dark {
 
 .sidebar.close .text {
     opacity: 0;
+    transition: var(--tran-03);
 }
 
 /* =========================== */
@@ -215,36 +206,51 @@ body.dark .sidebar header .toggle {
     transition: var(--tran-03);
 }
 
-/* Estilo para o formulário de logout */
-.logout-item {
-    list-style: none;
+.sidebar li.logout-item {
+    display: flex;
+    align-items: center;
+    background-color: var(--primary-color-light);
+    border-radius: 6px;
+    transition: var(--tran-05);
+    height: 50px;
 }
 
 .logout-button {
-    display: flex;
-    align-items: center;
+    width: 100%; /* Garante que o botão ocupe toda a largura do li */
+    height: 100%; /* Garante que o botão ocupe toda a altura do li */
     background-color: transparent;
-    border-radius: 6px;
     border: none;
     cursor: pointer;
-    transition: var(--tran-03);
-    color: var(--text-color);
-    text-decoration: none;
-    width: 100%;
-    padding: 10px 20px; /* Aumentar o espaço interno do botão */
-    height: 100%; /* Definir altura do botão */
+    display: flex;
+    align-items: center;
+    justify-content: flex-start; /* Alinha o conteúdo à esquerda */
+    padding: 0 0px; /* Ajusta o espaçamento interno conforme necessário */
+    color: var(--text-color); /* Define a cor do texto */
 }
 
+/* Ajuste para o botão de logout */
 .logout-button:hover {
-    background-color: var(--hover-color-dark);
+    background-color: transparent; /* Garante que não haverá mudança de cor ao passar o mouse */
 }
 
+body.dark .logout-button:hover {
+    background-color: transparent; /* Para o modo escuro, mantenha transparente ao passar o mouse */
+}
 .logout-button .icon {
     margin-right: 10px; /* Ajustar o espaçamento entre o ícone e o texto */
 }
 
 .logout-button:focus {
     outline: none;
+}
+
+.sidebar li.logout-item {
+    transition: var(--tran-03);
+}
+
+.sidebar.close .logout-item .text {
+    opacity: 0;
+    transition: var(--tran-03);
 }
 
 .logout-button .icon,
