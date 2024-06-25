@@ -43,6 +43,8 @@ INSTALLED_APPS = [
     'account.apps.AccountConfig',
     'bank.apps.BankConfig',
     'extract.apps.ExtractConfig',
+    'analytics.apps.AnalyticsConfig',
+    'wallet.apps.WalletConfig',
 ]
 
 MIDDLEWARE = [

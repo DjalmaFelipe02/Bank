@@ -1,56 +1,29 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
-
-body {
-    font-family: 'Inter', sans-serif;
-    margin: 0;
-    padding: 0;
-    color: #1e1e1e
+.home h1 {
+    font-size: 45px;
+    margin-bottom: 15px;
 }
 
-img {
-    width: 40%; /* Ajuste conforme necessário */
-    float: left;
-    height: 730px;
+.home p {
+    font-size: 18px;
+    margin-bottom: 15px;
 }
 
-.fraseLogin{
-    position: absolute;
-    font-family: Arial, Helvetica, sans-serif;
-    left: 45px;
-    bottom: 59px;
+.home h2 {
+    font-size: 22px;
+    margin-bottom: 10px;
 }
 
-.page {
-    display: flex;
-    align-items: center;
-    align-content: center;
-    width: 100%;
-    height: 100vh;
-    background-color: rgb(52, 52, 52);
+hr {
+    border-top: 1px solid #000000;
+    margin: 10px 0px; /* Espaçamento acima e abaixo da linha */
+    width: 280px;
 }
 
-.rodape {
-    position: fixed;
-    bottom: 0;
-    right: 0;
-    width: 60%;
-    backdrop-filter: blur(16px) saturate(180%);
-    -webkit-backdrop-filter: blur(16px) saturate(180%);
-    background-color: rgba(0, 0, 0, 0.75);
-    border: 1px solid rgba(255, 255, 255, 0.125);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 30px 40px; 
-    margin: 0; 
-}
-  
-  
-
-.rodape a {
-    color: #02b177;
-    text-decoration: none;
-    margin: 0 100px; 
+body.dark  h1,
+body.dark p,
+body.dark h2,
+body.dark  a {
+    color: var(--text-color);
 }
 
 .formLogin {
@@ -118,10 +91,18 @@ img {
     color: #02b177;
 }
 
+body.dark label {
+    font-size: 20px;
+    background-color: var(--body-color);
+    color: var(--text-color);
+}
+
 .btn {
     background-color: #02b177;
     color: #fff;
-    font-size: 14px;
+    font-size: 15px;
+    border-radius: 4px;
+    padding: 8px 16px;
     font-weight: 600;
     border: none !important;
     transition: all linear 160ms;
@@ -145,6 +126,7 @@ img {
 }
 
 .form-field label {
+    font-size: 20px;
     display: block;
     font-weight: bold;
 }

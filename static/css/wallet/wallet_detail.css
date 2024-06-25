@@ -1,0 +1,77 @@
+.home h1 {
+    font-size: 45px;
+    margin-bottom: 15px;
+}
+
+.home p {
+    font-size: 18px;
+    margin-bottom: 15px;
+}
+
+.home h2 {
+    font-size: 22px;
+    margin-bottom: 10px;
+}
+
+.home a {
+    display: inline-block;
+    padding: 8px 16px;
+    background-color: var(--primary-color);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    margin-right: 10px;
+}
+
+.btn {
+    background-color: #02b177;
+    color: #fff;
+    font-size: 14px;
+    padding: 6px 12px;
+    font-weight: 600;
+    border-radius: 4px;
+    border: none !important;
+    transition: all linear 160ms;
+    cursor: pointer;
+    margin: 0 !important;
+
+}
+
+.home a:hover {
+    background-color: #0056b3;
+}
+
+.delete-form {
+    display: inline;
+}
+
+
+.delete-form button {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.delete-form button:hover {
+    background-color: #c82333;
+}
+
+hr {
+    border-top: 1px solid #000000;
+    margin: 10px 0px; /* Espaçamento acima e abaixo da linha */
+    width: 280px;
+}
+
+body.dark  h1,
+body.dark p,
+body.dark h2,
+body.dark  a,
+body.dark hr,
+body.dark .delete-form button {
+    color: var(--text-color);
+}
+

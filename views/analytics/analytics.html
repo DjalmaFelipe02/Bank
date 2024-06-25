@@ -1,0 +1,115 @@
+{% extends 'layout.html' %}
+{% load static %}
+
+{% block 'title' %}
+    Analytics - {{ year }}
+{% endblock 'title' %}
+
+{% block 'head' %}
+    <link rel="stylesheet" href="{% static 'css/analytics/analytics.css' %}">
+{% endblock 'head' %} 
+
+{% block 'content' %}
+<div class="home">
+    <h1>Analytics - {{ year }}</h1>
+    <br>
+
+    <div class="chart-container">
+        {% for month_data in monthly_data %}
+            <div class="chart-item">
+                <h2>{{ month_data.month }}</h2> <!-- Adiciona o nome do mês como título -->
+                <div id="chart_div_{{ month_data.month }}" class="bar-chart"></div>
+            </div>
+            {% if forloop.counter|divisibleby:2 %}
+                <div class="clear"></div>
+            {% endif %}
+        {% endfor %}
+    </div>
+
+</div>
+{% endblock 'content' %}
+{% block 'scripts' %}
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript">
+    google.charts.load('current', {'packages':['corechart', 'bar']});
+    google.charts.setOnLoadCallback(drawCharts);
+
+    function getThemeOptions(monthName) {
+        var body = document.querySelector('body');
+        var isDarkMode = body.classList.contains('dark');
+
+        return isDarkMode ? {
+            title: 'Transferências no Mês de ' + monthName,
+            titleTextStyle: { color: '#FFF' },
+            hAxis: {
+                title: 'Intervalo de Dias',
+                titleTextStyle: { color: '#FFF' },
+                textStyle: { color: '#FFF' },
+                gridlines: { color: '#444' }
+            },
+            vAxis: {
+                title: 'Número de Transferências',
+                format: '0',
+                viewWindow: { min: 0 },
+                titleTextStyle: { color: '#FFF' },
+                textStyle: { color: '#FFF' },
+                gridlines: { color: '#444' }
+            },
+            bars: 'vertical',
+            height: 400,
+            legend: { position: 'top', textStyle: { color: '#FFF' } },
+            isStacked: false,
+            backgroundColor: '#333',
+            chartArea: { backgroundColor: '#333' },
+            titleTextStyle: { color: '#FFF' }
+        } : {
+            title: 'Transferências no Mês de ' + monthName,
+            hAxis: {
+                title: 'Intervalo de Dias',
+                textStyle: { color: '#000' },
+                gridlines: { color: '#ccc' }
+            },
+            vAxis: {
+                title: 'Número de Transferências',
+                format: '0',
+                viewWindow: { min: 0 },
+                textStyle: { color: '#000' },
+                gridlines: { color: '#ccc' }
+            },
+            bars: 'vertical',
+            height: 400,
+            legend: { position: 'top', textStyle: { color: '#000' } },
+            isStacked: false,
+            backgroundColor: '#FFF',
+            chartArea: { backgroundColor: '#FFF' },
+            titleTextStyle: { color: '#000' }
+        };
+    }
+
+    function drawCharts() {
+         // Código de toggle da barra lateral
+         const toggleButton = document.querySelector('.toggle');
+         const sidebar = document.querySelector('.sidebar');
+
+         toggleButton.addEventListener('click', function() {
+             sidebar.classList.toggle('close');
+         });
+         
+        {% for month_data in monthly_data %}
+        var data = google.visualization.arrayToDataTable([
+            ['Dia', 'Entradas', 'Saídas'],
+            {% for range, counts in month_data.day_ranges.items %}
+                ['{{ range }}', {{ counts.entries }}, {{ counts.exits }}],
+            {% endfor %}
+        ]);
+
+        var options = getThemeOptions('{{month_data.month}}');
+
+        var chart = new google.visualization.ColumnChart(document.getElementById('chart_div_{{ month_data.month }}'));
+        chart.draw(data, options);
+        {% endfor %}
+    }
+</script>
+
+{% endblock 'scripts' %}
+

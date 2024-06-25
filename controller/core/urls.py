@@ -12,6 +12,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include("bank.urls")),
     path('', include("account.urls")),
+    path('analytics/', include("analytics.urls")),
+    path('wallet/', include("wallet.urls")),
     path('account/', include("django.contrib.auth.urls")),
     path('extract/', include('extract.urls')),
 ]

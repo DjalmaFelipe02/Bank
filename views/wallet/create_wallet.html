@@ -1,0 +1,33 @@
+{% extends 'layout.html' %}
+{% load static %}
+
+{% block 'head' %}
+
+<link rel="stylesheet" href="{% static 'css/wallet/create_wallet.css' %}">
+
+{% endblock 'head' %}
+
+{% block 'content' %}
+<div class='home'>
+    <h1>Criar carteira</h1>
+    <form method="post">
+        {% csrf_token %}
+        <div class="form-fields">
+            {% for field in form %}
+                <div class="form-field">
+                    <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                    {{ field }}
+                    {% if field.errors %}
+                        <ul class="errorlist">
+                            {% for error in field.errors %}
+                                <li>{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                </div>
+            {% endfor %}
+        </div>
+        <button class='btn' type="submit">Criar</button>
+    </form>
+</div>
+{% endblock 'content' %}

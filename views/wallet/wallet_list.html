@@ -1,0 +1,23 @@
+{% extends 'layout.html' %}
+{% load static %}
+
+{% block 'head' %}
+    <link rel="stylesheet" href="{% static 'css/wallet/wallet_list.css' %}">
+{% endblock 'head' %}
+
+{% block 'content' %}
+<div class='home'>
+    <div class="text-wallet"><h1>Carteiras Bancarias </h1></div>
+    <a href="{% url 'create_wallet' %}">Criar Carteira</a>
+    <br> <br>
+    <div class="wallets">
+        {% for wallet in wallets %}
+        <div class="wallet" style="background-color: {{ wallet.color }};">
+            <h2>{{ wallet.name }}</h2>
+            <p>Saldo: ${{ wallet.balance }}</p>
+            <a href="{% url 'wallet_detail' wallet.id %}">Ver Detalhes</a>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock 'content' %}

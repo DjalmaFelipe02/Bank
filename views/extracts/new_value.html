@@ -29,25 +29,10 @@
                 </div>
                 <div class="form-group">
                     <label for="account">E-mail do Destinatário:</label>
-                    {% comment %} <select name="account" id="account">
-                        {% if accounts %}
-                            {% for account in accounts %}
-                                {% if account.id != request.user.id %}
-                                    <option value="{{ account.id }}">{{ account }}</option>
-                                {% endif %}
-                            {% endfor %}
-                        {% endif %}
-                    </select> {% endcomment %}
             <input type="email" id="recipient_email" name="recipient_email" required>
                 </div>
                 <button type="submit" class="botao-principal">Transferir</button>
             </form>
-            {% comment %} {% for message in messages %}
-            <div class="message {{ message.tags }}">
-                <span class="close-btn" onclick="this.parentElement.style.display='none';">&times;</span>
-                {{ message }}
-            </div>
-            {% endfor %} {% endcomment %}
         </div>
     </div>
 

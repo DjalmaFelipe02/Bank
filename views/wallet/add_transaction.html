@@ -1,0 +1,21 @@
+{% extends 'layout.html' %}
+{% load static %}
+
+{% block 'head' %}
+    <link rel="stylesheet" href="{% static 'css/wallet/add_transaction.css' %}">
+{% endblock 'head' %}
+
+{% block 'content' %}
+<div class='home'>
+    <h1>Adicionar um Valor a Carteira {{ wallet.name }}</h1>
+    <p>Saldo: ${{ wallet.balance }}</p>
+    <form method="post" action="{% url 'add_transaction' wallet.id %}">
+        {% csrf_token %}
+        <label for="amount">Valor:</label>
+        <input type="number" name="amount" id="amount" step="0.01">
+        <button class='btn' type="submit">Adicionar</button>
+    </form>
+    <h2></h2> 
+    <a href="{% url 'wallet_detail' wallet.id %}">Voltar</a>
+</div>
+{% endblock 'content'%}

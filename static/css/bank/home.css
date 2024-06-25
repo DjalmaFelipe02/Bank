@@ -216,28 +216,28 @@ body.dark .sidebar header .toggle {
 }
 
 .logout-button {
-    width: 100%; /* Garante que o botão ocupe toda a largura do li */
-    height: 100%; /* Garante que o botão ocupe toda a altura do li */
+    width: 100%; 
+    height: 100%;
     background-color: transparent;
     border: none;
     cursor: pointer;
     display: flex;
     align-items: center;
-    justify-content: flex-start; /* Alinha o conteúdo à esquerda */
-    padding: 0 0px; /* Ajusta o espaçamento interno conforme necessário */
-    color: var(--text-color); /* Define a cor do texto */
+    justify-content: flex-start; 
+    padding: 0 0px; 
+    color: var(--text-color); 
 }
 
-/* Ajuste para o botão de logout */
+
 .logout-button:hover {
-    background-color: transparent; /* Garante que não haverá mudança de cor ao passar o mouse */
+    background-color: transparent; 
 }
 
 body.dark .logout-button:hover {
-    background-color: transparent; /* Para o modo escuro, mantenha transparente ao passar o mouse */
+    background-color: transparent; 
 }
 .logout-button .icon {
-    margin-right: 10px; /* Ajustar o espaçamento entre o ícone e o texto */
+    margin-right: 10px; 
 }
 
 .logout-button:focus {
@@ -255,9 +255,9 @@ body.dark .logout-button:hover {
 
 .logout-button .icon,
 .logout-button .text {
-    display: flex; /* Para utilizar alinhamento flex */
-    align-items: center; /* Centralizar verticalmente */
-    height: 100%; /* Garantir que ocupem toda a altura do botão */
+    display: flex; 
+    align-items: center; 
+    height: 100%; 
 }
 
 .sidebar li a:hover {
@@ -265,7 +265,7 @@ body.dark .logout-button:hover {
 }
 
 body.dark .sidebar li a:hover {
-    background-color: var(--hover-color-dark); /* Use green for hover in dark mode */
+    background-color: var(--hover-color-dark); 
 }
 
 .sidebar li a:hover .icon,

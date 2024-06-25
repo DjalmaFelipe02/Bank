@@ -1,0 +1,87 @@
+.home h1 {
+    font-size: 45px;
+    margin-bottom: 15px;
+}
+
+.home p {
+    font-size: 18px;
+    margin-bottom: 15px;
+}
+
+.home h2 {
+    font-size: 22px;
+    margin-bottom: 10px;
+}
+
+hr {
+    border-top: 1px solid #000000;
+    margin: 10px 0px; /* Espaçamento acima e abaixo da linha */
+    width: 280px;
+}
+
+body.dark  h1,
+body.dark p,
+body.dark h2,
+body.dark  a {
+    color: var(--text-color);
+}
+
+body.dark label {
+    font-size: 20px;
+    background-color: var(--body-color);
+    color: var(--text-color);
+}
+
+.btn {
+    background-color: #02b177;
+    color: #fff;
+    font-size: 14px;
+    padding: 6px 12px;
+    font-weight: 600;
+    border-radius: 4px;
+    border: none !important;
+    transition: all linear 160ms;
+    cursor: pointer;
+    margin: 0 !important;
+
+}
+
+.btn:hover {
+    transform: scale(1.05);
+    background-color: #02b177;
+
+}
+/* Estilos para o formulário de login */
+.form-fields {
+    margin-bottom: 20px;
+}
+
+.home a {
+    display: inline-block;
+    padding: 6px 12px;
+    background-color: var(--primary-color);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+
+body.dark  h1,
+body.dark  a {
+    color: var(--text-color);
+}
+
+.form-field {
+    margin-bottom: 10px;
+}
+
+.form-field label {
+    font-size: 20px;
+    display: block;
+    font-weight: bold;
+}
+
+.form-field .errorlist {
+    color: red;
+    margin-top: 5px;
+}

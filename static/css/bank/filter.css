@@ -70,7 +70,7 @@ body.dark button{
     border: var(--text-color); /* Altere para a cor desejada */
     color: var(--text-color); /* Altere para a cor desejada */
 }
-body.dark label {
+body.dark .labels {
     background-color: var(--sidebar-color);
     color: var(--text-color);
 }
