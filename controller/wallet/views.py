@@ -31,7 +31,7 @@ def delete_wallet(request, wallet_id):
     wallet.delete()  # Exclui a carteira
 
     # Transferir o saldo da carteira de volta para o saldo da conta bancária do usuário
-    request.user.value += round(request.user.value + wallet_balance, 2)
+    request.user.value = round(request.user.value + wallet_balance, 2)
     request.user.save()
 
     messages.success(request, 'Carteira excluída com sucesso e saldo transferido para sua conta.')

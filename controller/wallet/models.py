@@ -1,6 +1,6 @@
 from django.db import models
 from django.conf import settings
-from account.models import *
+from account.models import CustomUser
 
 class Wallet(models.Model):
     COLOR_CHOICES = [
@@ -19,3 +19,6 @@ class Wallet(models.Model):
 
     def __str__(self):
         return self.name
+    
+    class Meta:
+        db_table = 'Wallets'

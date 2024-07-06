@@ -1,9 +1,12 @@
 from django.http import HttpResponse
+from django.shortcuts import redirect
 from django.views.generic.edit import CreateView
 from django.urls import reverse_lazy
 from django.contrib.auth.hashers import make_password
-from django.contrib import messages
 from account.forms import AccountSignUpForm
+from django.utils.decorators import method_decorator
+from django.contrib.auth.decorators import login_required
+
 
 from django.contrib.auth import get_user_model
 
@@ -23,7 +26,6 @@ class AccountCreateView(CreateView):
           
         return super(AccountCreateView, self).form_valid(form)
     
-
     
 
 

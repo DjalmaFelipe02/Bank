@@ -2,7 +2,6 @@ from django.shortcuts import render
 from django.db.models import Count
 from django.db.models.functions import TruncDay
 from django.utils import timezone
-from datetime import datetime
 from django.contrib.auth.decorators import login_required
 import calendar  # Importar o módulo calendar
 from django.utils.translation import gettext as _
@@ -15,8 +14,8 @@ def analytics(request):
     user = request.user
 
     # Filtrar os dados para o ano específico
-    start_date = datetime(int(year), 1, 1)
-    end_date = datetime(int(year), 12, 31, 23, 59, 59)
+    start_date = timezone.datetime(int(year), 1, 1)
+    end_date = timezone.datetime(int(year), 12, 31, 23, 59, 59)
 
     values = Values.objects.filter(date__range=(start_date, end_date), account=user)
 
@@ -65,7 +64,7 @@ def analytics(request):
             elif 26 <= day <= 31:
                 day_ranges['26-31']['exits'] += exit['count']
 
-        # Obter o nome completo do mês usando o módulo calendar e 0 "_" faz a tradução para o português
+        # Obter o nome completo do mês usando o módulo calendar e _ faz a tradução para o português
         month_name = _(calendar.month_name[month])
 
         monthly_data.append({
@@ -79,4 +78,3 @@ def analytics(request):
     }
 
     return render(request, 'analytics/analytics.html', context)
-
