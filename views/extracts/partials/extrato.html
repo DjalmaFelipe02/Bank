@@ -5,48 +5,65 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PDF-Extrato</title>
-    <link rel="stylesheet" href="{% static 'css/extract/partials.css' %}">
     <style>
         body {
             font-family: Arial, sans-serif;
             margin: 20px;
         }
+
+        table {
+            width: 100%;
+            border-collapse: collapse; /* Remove default border collapse */
+            margin-top: 20px;
+        }
+        
+        table, th, td {
+            border: 1px solid black; /* Add borders to table, header and cells */
+        }
+        
+        /* Table header styling */
+        thead th {
+            background-color: #f2f2f2; /* Light grey background for headers */
+            padding: 10px; /* Add padding to headers */
+            text-align: left;
+            font-size: 13px;
+        }
+        
+        /* Table body styling */
+        tbody td {
+            padding: 10px; /* Add padding to cells */
+            text-align: left; /* Align text to the left */
+            font-size: 13px;
+
+        }
+        
+        /* Table row hover effect */
+        tbody tr:hover {
+            background-color: #f1f1f1; /* Light grey background on hover */
+        }
+        
+        /* Header section styling */
         .header {
             text-align: center;
             margin-bottom: 20px;
         }
+        
         .header h1 {
             margin: 0;
             padding: 10px 0;
         }
+        
         .header p {
             margin: 5px 0;
             font-size: 14px;
         }
+        
+        /* Content section styling */
         .content {
             margin: 0 auto;
-            width: 100%;
+            width: 90%;
         }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
-        table, th, td {
-            border: 1px solid black;
-        }
-        thead th {
-            background-color: #f2f2f2;
-            padding: 10px;
-            text-align: left;
-        }
-        tbody td {
-            padding: 10px;
-            text-align: left;
-        }
-        tbody tr:hover {
-            background-color: #f1f1f1;
-        }
+        
     </style>
     
 </head>

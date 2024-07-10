@@ -2,7 +2,8 @@ import os
 from io import BytesIO  #Biblioteca que permite salvar os Bytes em memória, em vez de salvar no disco.
 from datetime import datetime
 
-from weasyprint import HTML
+# from weasyprint import HTML
+from xhtml2pdf import pisa
 from django.utils import timezone
 from django.conf import settings 
 from django.shortcuts import render, redirect
@@ -147,23 +148,39 @@ def view_extract(request):
 @login_required
 def export_pdf(request):
     user = request.user
-    values= Values.objects.filter(account=user,date__month=datetime.now().month).order_by('-date')
+    values = Values.objects.filter(account=user, date__month=datetime.now().month).order_by('-date')
     accounts = CustomUser.objects.filter(id=user.id)
 
     now = datetime.now()
     current_time = now.strftime("%d/%m/%Y %H:%M:%S")
-    
-    path_template = os.path.join(settings.BASE_DIR, '../views/extracts/partials/extrato.html')# Colocando o caminho do arquivo HYML em uma variável, pois não se pode usar o "extratos.html" como caminho para a função "render_to_string"
-    path_output = BytesIO() # Para salvar o Bytes em memória RAM, para assim ja mandar para o ususário e depois elimina-lo da memoria, fazendo com que não gaste espaço em disco na propria máquina.
 
-    template_render = render_to_string(path_template, {'values': values, 'accounts': accounts,'current_time':current_time,'user': user,})# Aqui ele tranforma o HTML do Django em um HTML normal, com os dados dos usuário, e sem as funcoes do Django.
-    #print(template_render) ---> Aqui vemos que foi printado no terminal o html sem as funções do django, apenas os valores dos dados.
-    #return HttpResponse(template_render)
+    # Carregando o template HTML
+    template_path = os.path.join(settings.BASE_DIR, '../views/extracts/partials/extrato.html')
+    context = {
+        'values': values,
+        'accounts': accounts,
+        'current_time': current_time,
+        'user': user,
+    }
+    template = render_to_string(template_path, context)
 
-    HTML(string=template_render).write_pdf(path_output) # Instaciando o HTML no weasyprint, para gerar o seu PDF e ser salvo no "path_output".
+    # Criando um buffer de Bytes para salvar o PDF
+    buffer = BytesIO()
 
+    # Convertendo o HTML para PDF usando xhtml2pdf
+    try:
+        pisa_status = pisa.CreatePDF(template, dest=buffer)
+    except Exception as e:
+        return HttpResponse(f'Erro ao gerar PDF: {str(e)}')
+
+    # Verificando se a conversão foi bem-sucedida
+    if pisa_status.err:
+        return HttpResponse(f'Erro ao gerar PDF: {pisa_status.err}')
+
+    # Retornando o PDF como resposta HTTP
+    buffer.seek(0)
     response = HttpResponse(content_type='application/pdf')
     response['Content-Disposition'] = 'attachment; filename="extrato.pdf"'
-    response.write(path_output.getvalue())
+    response.write(buffer.getvalue())
 
     return response
