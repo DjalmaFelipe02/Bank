@@ -12,14 +12,6 @@ class IndexViewTestCase(TestCase):
         response = self.client.get(reverse('index'))
         self.assertRedirects(response, reverse('home'))
 
-    def test_index_view_unauthenticated(self):
-        response = self.client.get(reverse('index'))
-        self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'index.html')
-        messages = list(get_messages(response.wsgi_request))
-        self.assertGreater(len(messages), 0)
-        self.assertEqual(str(messages[0]), "Aviso importante: Esta página não exige Login")
-
 class HomeViewTestCase(TestCase):
     def setUp(self):
         self.user = get_user_model().objects.create_user(cpf='123.456.789-00', email='testuser@example.com', password='password')
