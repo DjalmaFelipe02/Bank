@@ -18,3 +18,9 @@ class AccountSignUpForm(forms.ModelForm):
             raise forms.ValidationError("Este CPF já está registrado.")
         # Adicione aqui uma função para validar a formatação e a validade do CPF, se necessário.
         return cpf
+    def clean_email(self):
+        email = self.cleaned_data.get("email")
+        if User.objects.filter(email=email).exists():
+            raise forms.ValidationError("Este Email já está registrado.")
+        # Adicione aqui uma função para validar a formatação e a validade do CPF, se necessário.
+        return email
