@@ -19,8 +19,9 @@ def index(request):
 
 @login_required
 def home (request):
-    mensagem = " Você foi Logado com Sucesso!!!"
-    messages.success(request,mensagem)
+    if not request.session.get('home_message_shown', False):
+        messages.success(request, "Você foi logado com sucesso.",extra_tags='home')
+        request.session['home_message_shown'] = True
 
     user = request.user  # Obtenha o usuário logado
 

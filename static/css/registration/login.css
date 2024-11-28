@@ -10,7 +10,7 @@ body {
 img {
     width: 40%; /* Ajuste conforme necessário */
     float: left;
-    height: 730px;
+    height: 100%;
 }
 
 .fraseLogin{

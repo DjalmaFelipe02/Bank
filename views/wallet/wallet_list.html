@@ -10,6 +10,19 @@
     <div class="text-wallet"><h1>Carteiras Bancarias </h1></div>
     <a href="{% url 'create_wallet' %}">Criar Carteira</a>
     <br> <br>
+    <div class="messages">
+    
+        {% for message in messages %}
+            {% if "wallet" in message.tags %}
+                <div class="message">
+                    <span class="close-btn" onclick="this.parentElement.style.display='none';">&times;</span>
+                    {{ message }}
+                </div>
+            {% endif %}
+        {% endfor %}
+    
+    </div>
+    <br> <br>
     <div class="wallets">
         {% for wallet in wallets %}
         <div class="wallet" style="background-color: {{ wallet.color }};">

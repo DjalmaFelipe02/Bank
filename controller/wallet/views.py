@@ -12,6 +12,11 @@ def wallet_list(request):
 
 @login_required
 def create_wallet(request):
+
+    if Wallet.objects.filter(owner=request.user).count() >= 10:
+        messages.add_message(request, messages.ERROR, 'Você atingiu o limite de 10 carteiras.', extra_tags='wallet')
+        return redirect('wallet_list')  # Redireciona para a lista de carteiras
+
     if request.method == 'POST':
         form = WalletForm(request.POST)
         if form.is_valid():
